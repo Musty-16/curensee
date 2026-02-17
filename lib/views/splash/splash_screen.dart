@@ -51,10 +51,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     
     _animationController.forward();
     
-    // Navigate to login screen after 3 seconds
+    // Navigate to onboarding screen after 5 seconds
     Future.delayed(const Duration(seconds: 5), () {
       if (mounted) {
-        Navigator.pushReplacementNamed(context, AppRoutes.login);
+        Navigator.pushReplacementNamed(context, AppRoutes.onboarding);
       }
     });
   }

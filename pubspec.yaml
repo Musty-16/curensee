@@ -60,6 +60,9 @@ dependencies:
   #charts and graphs
   fl_chart: ^0.66.2
 
+  #native splash screen
+  flutter_native_splash: ^2.3.8
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

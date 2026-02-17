@@ -4,6 +4,7 @@ import 'routes/app_routes.dart';
 
 // Screens
 import 'views/splash/splash_screen.dart'; // Add this import
+import 'views/onboarding/onboarding_screen.dart';
 import 'views/auth/login_screen.dart';
 import 'views/auth/register_screen.dart';
 import 'views/home/home_screen.dart';
@@ -30,6 +31,7 @@ class CurrenSeeApp extends StatelessWidget {
       
       routes: {
         AppRoutes.splash: (context) => const SplashScreen(), // Add this
+        AppRoutes.onboarding: (context) => const OnboardingScreen(),
         AppRoutes.login: (context) => const LoginScreen(),
         AppRoutes.register: (context) => const RegisterScreen(),
         AppRoutes.home: (context) => const HomeScreen(),
