@@ -47,7 +47,8 @@ class _SupportScreenState extends State<SupportScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final viewInsets = MediaQuery.of(context).viewInsets;
-
+    
+    // Remove MainScaffold - just return the Scaffold directly
     return Scaffold(
       appBar: AppBar(
         title: const Text("Support"),

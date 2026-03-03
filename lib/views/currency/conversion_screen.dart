@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
-import '../../routes/app_routes.dart'; // Add this import
 import '../../widgets/currency_selector.dart';
 import '../../widgets/animated_amount_input.dart';
 import '../../widgets/conversion_result_card.dart';
@@ -63,11 +62,9 @@ class _ConversionScreenState extends State<ConversionScreen> with SingleTickerPr
       _isLoading = true;
     });
 
-    // Simulate API call
     await Future.delayed(const Duration(seconds: 1));
 
     setState(() {
-      // Mock conversion logic
       double amount = double.tryParse(_amountController.text) ?? 0;
       if (_fromCurrency == 'USD' && _toCurrency == 'EUR') {
         _convertedAmount = amount * 0.92;
@@ -79,7 +76,6 @@ class _ConversionScreenState extends State<ConversionScreen> with SingleTickerPr
       _isLoading = false;
     });
 
-    // Show success message
     _showSuccessSnackBar('Conversion completed!');
   }
 
@@ -122,26 +118,13 @@ class _ConversionScreenState extends State<ConversionScreen> with SingleTickerPr
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Currency Converter'),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.history),
-            onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.history);
-            },
-          ),
-        ],
-      ),
-      body: Container(
+    return Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppTheme.primaryColor.withValues(alpha: 0.05), // Fixed: replaced withOpacity
+              AppTheme.primaryColor.withValues(alpha: 0.05),
               AppTheme.backgroundColor,
             ],
           ),
@@ -178,7 +161,7 @@ class _ConversionScreenState extends State<ConversionScreen> with SingleTickerPr
                 FadeTransition(
                   opacity: _fadeAnimation,
                   child: SlideTransition(
-                    position: _slideAnimation, // Fixed: changed from offset to position
+                    position: _slideAnimation,
                     child: AnimatedAmountInput(
                       controller: _amountController,
                       onChanged: (value) {
@@ -198,10 +181,9 @@ class _ConversionScreenState extends State<ConversionScreen> with SingleTickerPr
                 FadeTransition(
                   opacity: _fadeAnimation,
                   child: SlideTransition(
-                    position: _slideAnimation, // Fixed: changed from offset to position
+                    position: _slideAnimation,
                     child: Row(
                       children: [
-                        // From Currency
                         Expanded(
                           child: CurrencySelector(
                             label: 'From',
@@ -218,7 +200,6 @@ class _ConversionScreenState extends State<ConversionScreen> with SingleTickerPr
                           ),
                         ),
                         
-                        // Swap Button
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
                           child: GestureDetector(
@@ -226,7 +207,7 @@ class _ConversionScreenState extends State<ConversionScreen> with SingleTickerPr
                             child: Container(
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
-                                color: AppTheme.primaryColor.withValues(alpha: 0.1), // Fixed: replaced withOpacity
+                                color: AppTheme.primaryColor.withValues(alpha: 0.1),
                                 shape: BoxShape.circle,
                               ),
                               child: Icon(
@@ -238,7 +219,6 @@ class _ConversionScreenState extends State<ConversionScreen> with SingleTickerPr
                           ),
                         ),
                         
-                        // To Currency
                         Expanded(
                           child: CurrencySelector(
                             label: 'To',
@@ -294,7 +274,7 @@ class _ConversionScreenState extends State<ConversionScreen> with SingleTickerPr
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                           decoration: BoxDecoration(
-                            color: AppTheme.successColor.withValues(alpha: 0.1), // Fixed: replaced withOpacity
+                            color: AppTheme.successColor.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Row(
@@ -389,8 +369,7 @@ class _ConversionScreenState extends State<ConversionScreen> with SingleTickerPr
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 
   Widget _buildQuickChip(String from, String to) {

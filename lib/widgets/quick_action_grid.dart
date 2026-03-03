@@ -35,6 +35,7 @@ class QuickActionGrid extends StatelessWidget {
           icon: action['icon'],
           title: action['title'],
           onTap: () {
+            // Navigate using pushNamed
             Navigator.pushNamed(context, action['route']);
           },
         );
@@ -63,7 +64,7 @@ class QuickActionGrid extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppTheme.primaryColor.withValues(alpha: 0.1), // Fixed
+                color: AppTheme.primaryColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -77,7 +78,7 @@ class QuickActionGrid extends StatelessWidget {
               title,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w500,
-                fontSize: MediaQuery.of(context).size.width * 0.03, // Responsive font
+                fontSize: MediaQuery.of(context).size.width * 0.03,
               ),
               textAlign: TextAlign.center,
             ),

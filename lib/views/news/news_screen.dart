@@ -43,6 +43,7 @@ class _NewsScreenState extends State<NewsScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     
+    // Remove MainScaffold - just return the Scaffold directly
     return Scaffold(
       backgroundColor: AppTheme.backgroundColor,
       body: CustomScrollView(
@@ -640,7 +641,7 @@ class _NewsScreenState extends State<NewsScreen> with TickerProviderStateMixin {
       'Oil Prices Slide as Demand Concerns Weigh on Market',
       'Tech Stocks Rally as Treasury Yields Fall',
       'Gold Hits Record High on Rate Cut Expectations',
-      'Bitcoin Breaks \$50K as Institutional Interest Grows',
+      r'Bitcoin Breaks $50K as Institutional Interest Grows', // Fixed the raw string
       'China Stimulus Boosts Asian Currency Markets',
     ];
     return titles[index % titles.length];
@@ -684,4 +685,4 @@ class _NewsScreenState extends State<NewsScreen> with TickerProviderStateMixin {
   String _getReadTime(int index) {
     return '${3 + (index % 5)}';
   }
-} // <-- This closing bracket was missing
+}

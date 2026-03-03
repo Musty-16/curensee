@@ -50,7 +50,7 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
   void _handleRegister() {
     if (_formKey.currentState?.validate() ?? false) {
       // Add your registration logic here
-      Navigator.pushReplacementNamed(context, AppRoutes.home);
+      Navigator.pushReplacementNamed(context, AppRoutes.main);
     }
   }
 

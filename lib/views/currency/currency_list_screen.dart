@@ -8,7 +8,7 @@ class CurrencyListScreen extends StatefulWidget {
   State<CurrencyListScreen> createState() => _CurrencyListScreenState();
 }
 
-class _CurrencyListScreenState extends State<CurrencyListScreen> with TickerProviderStateMixin { // Fixed: Changed to TickerProviderStateMixin
+class _CurrencyListScreenState extends State<CurrencyListScreen> with TickerProviderStateMixin {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
   String _selectedFilter = 'All';
@@ -67,11 +67,51 @@ class _CurrencyListScreenState extends State<CurrencyListScreen> with TickerProv
     super.dispose();
   }
 
+  void _showSortOptions() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Sort By',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 20),
+              _buildSortOption('Currency Code', Icons.sort_by_alpha),
+              _buildSortOption('Exchange Rate', Icons.trending_up),
+              _buildSortOption('Daily Change', Icons.show_chart),
+              _buildSortOption('Type', Icons.category),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildSortOption(String title, IconData icon) {
+    return ListTile(
+      leading: Icon(icon, color: AppTheme.primaryColor),
+      title: Text(title),
+      onTap: () {
+        Navigator.pop(context);
+        // Implement sorting logic here
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final viewInsets = MediaQuery.of(context).viewInsets; // Added for keyboard handling
+    final viewInsets = MediaQuery.of(context).viewInsets;
     
+    // Remove MainScaffold - just return the Scaffold directly
     return Scaffold(
       appBar: AppBar(
         title: const Text('Currencies'),
@@ -79,7 +119,7 @@ class _CurrencyListScreenState extends State<CurrencyListScreen> with TickerProv
         actions: [
           IconButton(
             icon: const Icon(Icons.sort),
-            onPressed: () => _showSortOptions(),
+            onPressed: _showSortOptions,
           ),
         ],
       ),
@@ -146,7 +186,7 @@ class _CurrencyListScreenState extends State<CurrencyListScreen> with TickerProv
                             });
                           },
                           backgroundColor: AppTheme.backgroundColor,
-                          selectedColor: AppTheme.primaryColor.withValues(alpha: 0.1), // Fixed: replaced withOpacity
+                          selectedColor: AppTheme.primaryColor.withValues(alpha: 0.1),
                           checkmarkColor: AppTheme.primaryColor,
                           labelStyle: TextStyle(
                             color: _selectedFilter == filter
@@ -172,7 +212,7 @@ class _CurrencyListScreenState extends State<CurrencyListScreen> with TickerProv
               child: _filteredCurrencies.isEmpty
                   ? Center(
                       child: Padding(
-                        padding: EdgeInsets.only(bottom: viewInsets.bottom), // Handle keyboard
+                        padding: EdgeInsets.only(bottom: viewInsets.bottom),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -199,7 +239,7 @@ class _CurrencyListScreenState extends State<CurrencyListScreen> with TickerProv
                         left: size.width * 0.04,
                         right: size.width * 0.04,
                         top: size.height * 0.02,
-                        bottom: viewInsets.bottom + size.height * 0.02, // Handle keyboard
+                        bottom: viewInsets.bottom + size.height * 0.02,
                       ),
                       itemCount: _filteredCurrencies.length,
                       itemBuilder: (context, index) {
@@ -241,7 +281,7 @@ class _CurrencyListScreenState extends State<CurrencyListScreen> with TickerProv
         ),
         child: InkWell(
           onTap: () {
-            // Navigate to currency detail or use in conversion
+            // Return the selected currency code to the previous screen
             Navigator.pop(context, currency['code']);
           },
           borderRadius: BorderRadius.circular(16),
@@ -282,10 +322,10 @@ class _CurrencyListScreenState extends State<CurrencyListScreen> with TickerProv
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
                             color: currency['type'] == 'Major'
-                                ? AppTheme.primaryColor.withValues(alpha: 0.1) // Fixed
+                                ? AppTheme.primaryColor.withValues(alpha: 0.1)
                                 : currency['type'] == 'Minor'
-                                    ? AppTheme.secondaryColor.withValues(alpha: 0.1) // Fixed
-                                    : AppTheme.accentColor.withValues(alpha: 0.1), // Fixed
+                                    ? AppTheme.secondaryColor.withValues(alpha: 0.1)
+                                    : AppTheme.accentColor.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
@@ -347,45 +387,6 @@ class _CurrencyListScreenState extends State<CurrencyListScreen> with TickerProv
           ),
         ),
       ),
-    );
-  }
-
-  void _showSortOptions() {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        return Container(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Sort By',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 20),
-              _buildSortOption('Currency Code', Icons.sort_by_alpha),
-              _buildSortOption('Exchange Rate', Icons.trending_up),
-              _buildSortOption('Daily Change', Icons.show_chart),
-              _buildSortOption('Type', Icons.category),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildSortOption(String title, IconData icon) {
-    return ListTile(
-      leading: Icon(icon, color: AppTheme.primaryColor),
-      title: Text(title),
-      onTap: () {
-        Navigator.pop(context);
-        // Implement sorting logic here
-      },
     );
   }
 }
